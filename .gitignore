@@ -1,0 +1,19 @@
+# PHP
+vendor/
+*.log
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Replit
+.breakpoints
+.upm/
