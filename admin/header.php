@@ -64,6 +64,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/admin/promotions.php">
+                                <i class="fas fa-ticket-alt"></i> Khuyến mãi
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/admin/orders.php">
                                 <i class="fas fa-shopping-cart"></i> Đơn hàng
                             </a>

@@ -1,6 +1,5 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+require_once 'includes/init.php';
 
 require_login();
 
@@ -9,48 +8,32 @@ if (is_admin()) {
 }
 
 $page_title = 'Giỏ hàng';
+$cartController = new CartController($db_conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
     
     if ($_POST['action'] === 'update') {
-        $cart_id = $_POST['cart_id'];
-        $quantity = max(1, (int)$_POST['quantity']);
+        $cart_id = (int) $_POST['cart_id'];
+        $quantity = max(1, (int) $_POST['quantity']);
         
-        $stmt = $db_conn->prepare("UPDATE cart SET quantity = ? WHERE id = ? AND id_user = ?");
-        $stmt->execute([$quantity, $cart_id, $_SESSION['user_id']]);
-        
+        $cartController->updateQuantity((int) $_SESSION['user_id'], $cart_id, $quantity);
         echo json_encode(['success' => true]);
         exit();
     }
     
     if ($_POST['action'] === 'remove') {
-        $cart_id = $_POST['cart_id'];
-        
-        $stmt = $db_conn->prepare("DELETE FROM cart WHERE id = ? AND id_user = ?");
-        $stmt->execute([$cart_id, $_SESSION['user_id']]);
+        $cart_id = (int) $_POST['cart_id'];
+        $cartController->removeItem((int) $_SESSION['user_id'], $cart_id);
         
         echo json_encode(['success' => true]);
         exit();
     }
 }
 
-$stmt = $db_conn->prepare("
-    SELECT c.*, p.name, p.price, p.img, s.size, b.name as brand_name
-    FROM cart c
-    JOIN products p ON c.id_product = p.id
-    JOIN sizes s ON c.id_size = s.id
-    LEFT JOIN brands b ON p.id_brand = b.id
-    WHERE c.id_user = ?
-    ORDER BY c.created_at DESC
-");
-$stmt->execute([$_SESSION['user_id']]);
-$cart_items = $stmt->fetchAll();
-
-$total = 0;
-foreach ($cart_items as $item) {
-    $total += $item['price'] * $item['quantity'];
-}
+$cartData = $cartController->list((int) $_SESSION['user_id']);
+$cart_items = $cartData['items'];
+$total = $cartData['total'];
 
 include 'includes/header.php';
 ?>

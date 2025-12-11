@@ -43,6 +43,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="/wishlist.php"><i class="fas fa-heart"></i> Yêu thích</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/orders.php"><i class="fas fa-box"></i> Đơn hàng</a>
                             </li>
                         <?php endif; ?>

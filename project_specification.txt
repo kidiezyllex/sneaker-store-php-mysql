@@ -1,0 +1,85 @@
+MÔN HỌC: PHP NÂNG CAO
+ĐỀ TÀI: XÂY DỰNG WEBSITE BÁN HÀNG TRÊN INTERNET
+
+I. MỤC TIÊU ĐỀ TÀI
+
+Xây dựng website thương mại điện tử cho phép giới thiệu sản phẩm, hỗ trợ mua sắm trực tuyến và cung cấp hệ thống quản trị đầy đủ phục vụ hoạt động kinh doanh.
+
+II. YÊU CẦU CHỨC NĂNG
+
+1. Chức năng dành cho khách hàng
+
+• Xem & tìm kiếm sản phẩm:
+  - Xem chi tiết sản phẩm (giá, mô tả, hình ảnh, đánh giá)
+  - Tìm kiếm theo từ khóa
+  - Lọc theo giá, thương hiệu, danh mục, màu sắc/kích thước, tình trạng
+  - Sắp xếp theo giá, độ phổ biến, đánh giá
+
+• Giỏ hàng:
+  - Thêm/xóa/cập nhật sản phẩm
+  - Tự động tính tổng tiền
+  - Gợi ý sản phẩm liên quan
+  - Lưu giỏ hàng theo tài khoản
+
+• Đặt hàng & thanh toán:
+  - Nhập thông tin người mua
+  - Chọn phương thức thanh toán (ATM/Internet Banking, COD, thanh toán tại cửa hàng)
+  - Chọn phương thức giao hàng
+  - Xác nhận đơn hàng qua email/SMS
+
+• Quản lý tài khoản:
+  - Đăng ký – Đăng nhập
+  - Khôi phục mật khẩu
+  - Chỉnh sửa thông tin cá nhân
+  - Quản lý địa chỉ
+  - Xem lịch sử đơn hàng & trạng thái
+
+• Đánh giá & bình luận:
+  - Đánh giá sao
+  - Viết bình luận
+  - Upload ảnh thực tế (tùy chọn)
+  - Hệ thống kiểm duyệt nội dung
+
+• Wishlist & so sánh sản phẩm:
+  - Lưu sản phẩm yêu thích
+  - So sánh thông số kỹ thuật
+
+• Hỗ trợ trực tuyến:
+  - Chatbox hỗ trợ khách hàng
+  - Gửi phản hồi sản phẩm
+
+• Xem thông tin doanh nghiệp:
+  - Giới thiệu
+  - Chính sách bảo hành – đổi trả
+  - Khuyến mãi
+  - Tin tức/blog
+
+2. Chức năng dành cho nhà quản trị (Admin)
+
+• Quản lý sản phẩm:
+  - Thêm – sửa – xóa sản phẩm
+  - Quản lý tồn kho
+
+• Quản lý danh mục:
+  - Thêm – sửa – xóa danh mục
+  - Sắp xếp thứ tự hiển thị
+
+• Quản lý khuyến mãi:
+  - Tạo mã giảm giá theo sản phẩm/danh mục/đơn hàng
+  - Thiết lập thời gian và số lượng mã
+
+• Quản lý khách hàng:
+  - Xem – tìm kiếm khách hàng
+  - Khóa tài khoản
+  - Thống kê lượt mua & tổng chi tiêu
+
+• Quản lý nhà cung cấp:
+  - Quản lý thông tin
+  - Quản lý hợp đồng
+  - Quản lý danh sách hàng cung cấp
+
+• Quản lý đơn hàng:
+  - Xử lý trạng thái đơn hàng (chờ xác nhận – đang giao – hoàn thành – hủy)
+  - In hóa đơn
+  - Cập nhật trạng thái cho khách hàng
+

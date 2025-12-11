@@ -1,6 +1,5 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+require_once 'includes/init.php';
 
 $page_title = 'Đăng nhập';
 $error = '';
@@ -12,27 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($email) || empty($password)) {
         $error = 'Vui lòng điền đầy đủ thông tin';
     } else {
-        $stmt = $db_conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
-        
-        if ($user && password_verify($password, $user['password'])) {
-            if ($user['status'] === 'locked') {
-                $error = 'Tài khoản của bạn đã bị khóa';
-            } else {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['full_name'] = $user['full_name'];
-                $_SESSION['role'] = $user['role'];
-                
-                if ($user['role'] === 'admin') {
-                    redirect('/admin/index.php');
-                } else {
-                    redirect('/index.php');
-                }
+        $auth = new AuthController($db_conn);
+        $result = $auth->login($email, $password);
+        if ($result['success']) {
+            if (($result['role'] ?? '') === 'admin') {
+                redirect('/admin/index.php');
             }
+            redirect('/index.php');
         } else {
-            $error = 'Email hoặc mật khẩu không đúng';
+            $error = $result['message'];
         }
     }
 }

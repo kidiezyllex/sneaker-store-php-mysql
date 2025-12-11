@@ -91,6 +91,8 @@ CREATE TABLE `orders` (
   `phone` varchar(20) NOT NULL,
   `address` text NOT NULL,
   `payment_method` varchar(50) NOT NULL,
+  `coupon_code` varchar(50) DEFAULT NULL,
+  `discount_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `total_amount` decimal(10,2) NOT NULL,
   `status` enum('pending','confirmed','shipping','completed','cancelled') NOT NULL DEFAULT 'pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -647,6 +649,38 @@ CREATE TABLE `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
+--
+-- Cấu trúc bảng cho bảng `wishlists`
+--
+CREATE TABLE `wishlists` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+--
+-- Cấu trúc bảng cho bảng `coupons`
+--
+CREATE TABLE `coupons` (
+  `id` int(11) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `description` text DEFAULT NULL,
+  `scope_type` enum('product','category','order') NOT NULL DEFAULT 'order',
+  `scope_id` int(11) DEFAULT NULL,
+  `discount_type` enum('percent','fixed') NOT NULL DEFAULT 'percent',
+  `discount_value` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `usage_limit` int(11) DEFAULT NULL,
+  `used_count` int(11) NOT NULL DEFAULT 0,
+  `start_at` datetime DEFAULT NULL,
+  `end_at` datetime DEFAULT NULL,
+  `min_order_amount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `sizes`
@@ -797,6 +831,22 @@ ALTER TABLE `reviews`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Chỉ mục cho bảng `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uniq_user_product` (`id_user`,`id_product`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_product` (`id_product`);
+
+--
+-- Chỉ mục cho bảng `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`);
+
+--
 -- Chỉ mục cho bảng `sizes`
 --
 ALTER TABLE `sizes`
@@ -869,6 +919,18 @@ ALTER TABLE `reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `wishlists`
+--
+ALTER TABLE `wishlists`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `sizes`
 --
 ALTER TABLE `sizes`
@@ -897,6 +959,13 @@ ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`id_size`) REFERENCES `sizes` (`id`) ON DELETE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `wishlists`
+--
+ALTER TABLE `wishlists`
+  ADD CONSTRAINT `wishlists_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `wishlists_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `orders`

@@ -1,6 +1,5 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+require_once 'includes/init.php';
 
 $page_title = 'Đăng ký tài khoản';
 $error = '';
@@ -21,20 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (strlen($password) < 6) {
         $error = 'Mật khẩu phải có ít nhất 6 ký tự';
     } else {
-        $stmt = $db_conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        
-        if ($stmt->fetch()) {
-            $error = 'Email đã được sử dụng';
+        $auth = new AuthController($db_conn);
+        $result = $auth->register([
+            'email' => $email,
+            'password' => $password,
+            'full_name' => $full_name,
+            'phone' => $phone,
+            'address' => $address
+        ]);
+        if ($result['success']) {
+            $success = $result['message'];
         } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $db_conn->prepare("INSERT INTO users (email, password, full_name, phone, address, role) VALUES (?, ?, ?, ?, ?, 'customer')");
-            
-            if ($stmt->execute([$email, $hashed_password, $full_name, $phone, $address])) {
-                $success = 'Đăng ký thành công! Vui lòng đăng nhập.';
-            } else {
-                $error = 'Có lỗi xảy ra, vui lòng thử lại';
-            }
+            $error = $result['message'];
         }
     }
 }

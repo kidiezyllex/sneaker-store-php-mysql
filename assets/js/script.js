@@ -62,18 +62,47 @@ function confirmDelete(message) {
 function toggleFavorite(element, event) {
     event.preventDefault();
     const icon = element.querySelector('i');
-    const isActive = element.classList.contains('active');
-    
-    if (isActive) {
-        element.classList.remove('active');
-        icon.classList.remove('fas', 'fa-heart');
-        icon.classList.add('far', 'fa-heart');
-    } else {
-        element.classList.add('active');
-        icon.classList.remove('far', 'fa-heart');
-        icon.classList.add('fas', 'fa-heart');
+    const productId = element.getAttribute('data-product-id');
+
+    if (!productId) {
+        return;
     }
-    
-    // Here you can add AJAX call to save favorite to database
-    // For now, it's just a visual toggle
+
+    const formData = new FormData();
+    formData.append('product_id', productId);
+
+    fetch('/wishlist-toggle.php', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+        .then(async (response) => {
+            if (response.status === 401) {
+                window.location.href = '/login.php';
+                return null;
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (!data) return;
+            if (!data.success) {
+                alert(data.message || 'Không thể cập nhật yêu thích');
+                return;
+            }
+
+            if (data.favorited) {
+                element.classList.add('active');
+                icon.classList.remove('far', 'fa-heart');
+                icon.classList.add('fas', 'fa-heart');
+            } else {
+                element.classList.remove('active');
+                icon.classList.remove('fas', 'fa-heart');
+                icon.classList.add('far', 'fa-heart');
+            }
+        })
+        .catch(() => {
+            alert('Không thể cập nhật yêu thích');
+        });
 }

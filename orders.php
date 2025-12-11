@@ -1,6 +1,5 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+require_once 'includes/init.php';
 
 require_login();
 
@@ -9,30 +8,22 @@ if (is_admin()) {
 }
 
 $page_title = 'Đơn hàng của tôi';
-
-$stmt = $db_conn->prepare("
-    SELECT * FROM orders 
-    WHERE id_user = ? 
-    ORDER BY created_at DESC
-");
-$stmt->execute([$_SESSION['user_id']]);
-$orders = $stmt->fetchAll();
+$orderController = new OrderController($db_conn);
+$reviewController = new ReviewController($db_conn);
 
 if (isset($_POST['add_review'])) {
-    $order_id = $_POST['order_id'];
-    $product_id = $_POST['product_id'];
-    $rating = $_POST['rating'];
+    $order_id = (int) $_POST['order_id'];
+    $product_id = (int) $_POST['product_id'];
+    $rating = (int) $_POST['rating'];
     $comment = sanitize($_POST['comment']);
     
-    $check_review = $db_conn->prepare("SELECT * FROM reviews WHERE id_product = ? AND id_user = ?");
-    $check_review->execute([$product_id, $_SESSION['user_id']]);
-    
-    if (!$check_review->fetch()) {
-        $insert_review = $db_conn->prepare("INSERT INTO reviews (id_product, id_user, rating, comment) VALUES (?, ?, ?, ?)");
-        $insert_review->execute([$product_id, $_SESSION['user_id'], $rating, $comment]);
+    $result = $reviewController->store($product_id, (int) $_SESSION['user_id'], $rating, $comment);
+    if ($result['success']) {
         $success = 'Đã thêm đánh giá thành công!';
     }
 }
+
+$orders = $orderController->listForUser((int) $_SESSION['user_id']);
 
 include 'includes/header.php';
 ?>
@@ -65,14 +56,7 @@ include 'includes/header.php';
                 </div>
                 <div class="card-body">
                     <?php
-                    $details_stmt = $db_conn->prepare("
-                        SELECT od.*, p.img
-                        FROM order_details od
-                        LEFT JOIN products p ON od.id_product = p.id
-                        WHERE od.id_order = ?
-                    ");
-                    $details_stmt->execute([$order['id']]);
-                    $details = $details_stmt->fetchAll();
+                    $details = $orderController->details((int) $order['id']);
                     ?>
                     
                     <?php foreach ($details as $detail): ?>

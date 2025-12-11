@@ -1,14 +1,11 @@
 <?php
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+require_once 'includes/init.php';
 
 require_login();
 
 $page_title = 'Thông tin cá nhân';
-
-$stmt = $db_conn->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
+$userController = new UserController($db_conn);
+$user = $userController->profile((int) $_SESSION['user_id']);
 
 $success = '';
 $error = '';
@@ -19,19 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone = sanitize($_POST['phone']);
         $address = sanitize($_POST['address']);
         
-        if (empty($full_name)) {
-            $error = 'Họ tên không được để trống';
+        $result = $userController->updateProfile((int) $_SESSION['user_id'], [
+            'full_name' => $full_name,
+            'phone' => $phone,
+            'address' => $address
+        ]);
+        if ($result['success']) {
+            $success = $result['message'];
+            $user = $userController->profile((int) $_SESSION['user_id']);
         } else {
-            $update_stmt = $db_conn->prepare("UPDATE users SET full_name = ?, phone = ?, address = ? WHERE id = ?");
-            if ($update_stmt->execute([$full_name, $phone, $address, $_SESSION['user_id']])) {
-                $_SESSION['full_name'] = $full_name;
-                $success = 'Cập nhật thông tin thành công!';
-                
-                $stmt->execute([$_SESSION['user_id']]);
-                $user = $stmt->fetch();
-            } else {
-                $error = 'Có lỗi xảy ra';
-            }
+            $error = $result['message'];
         }
     }
     
@@ -40,20 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_password = $_POST['new_password'];
         $confirm_password = $_POST['confirm_password'];
         
-        if (!password_verify($current_password, $user['password'])) {
-            $error = 'Mật khẩu hiện tại không đúng';
-        } elseif (strlen($new_password) < 6) {
-            $error = 'Mật khẩu mới phải có ít nhất 6 ký tự';
-        } elseif ($new_password !== $confirm_password) {
-            $error = 'Mật khẩu xác nhận không khớp';
+        $result = $userController->changePassword($user, $current_password, $new_password, $confirm_password);
+        if ($result['success']) {
+            $success = $result['message'];
         } else {
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $update_stmt = $db_conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-            if ($update_stmt->execute([$hashed_password, $_SESSION['user_id']])) {
-                $success = 'Đổi mật khẩu thành công!';
-            } else {
-                $error = 'Có lỗi xảy ra';
-            }
+            $error = $result['message'];
         }
     }
 }
