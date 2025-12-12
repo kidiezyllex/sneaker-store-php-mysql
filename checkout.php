@@ -49,11 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $data = $checkoutController->index((int) $_SESSION['user_id']);
 
+// Nếu giỏ trống, giữ lại trên trang và hiển thị thông báo thay vì redirect
 if (isset($data['error'])) {
-    redirect('/cart.php');
+    $error = $error ?: $data['error'];
 }
 
-extract($data);
+// Gán dữ liệu với giá trị mặc định để tránh lỗi khi giỏ trống
+$cart_items = $data['cart_items'] ?? [];
+$total = $data['total'] ?? 0;
+$user = $data['user'] ?? [];
+$discount = $discount ?? ($data['discount'] ?? 0);
+$coupon_code = $coupon_code ?? ($data['coupon_code'] ?? '');
+$coupon_message = $coupon_message ?? ($data['coupon_message'] ?? '');
+$applied_coupon = $applied_coupon ?? ($data['applied_coupon'] ?? null);
 
 // Nếu đã apply coupon thì cập nhật discount
 if ($applied_coupon) {
