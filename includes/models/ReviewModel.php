@@ -30,6 +30,33 @@ class ReviewModel extends Model
         ];
     }
 
+    public function getSummariesByProductIds(array $productIds): array
+    {
+        if (empty($productIds)) {
+            return [];
+        }
+
+        $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+        $stmt = $this->db->prepare("
+            SELECT id_product, AVG(rating) as avg_rating, COUNT(*) as total_reviews
+            FROM reviews
+            WHERE id_product IN ($placeholders)
+            GROUP BY id_product
+        ");
+        $stmt->execute($productIds);
+        $rows = $stmt->fetchAll();
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[(int) $row['id_product']] = [
+                'avg_rating' => round((float) ($row['avg_rating'] ?? 0), 1),
+                'total_reviews' => (int) ($row['total_reviews'] ?? 0),
+            ];
+        }
+
+        return $result;
+    }
+
     public function create(int $productId, int $userId, int $rating, ?string $comment): bool
     {
         $rating = max(1, min(5, $rating));

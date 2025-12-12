@@ -67,25 +67,28 @@
                                 <div class="card-body">
                                     <h6 class="card-title"><?php echo htmlspecialchars($product['model']); ?></h6>
                                     <p class="text-muted small mb-1"><?php echo htmlspecialchars($product['name']); ?></p>
+                                    <?php 
+                                    $ratingData = $product_ratings[$product['id']] ?? ['avg_rating' => 0, 'total_reviews' => 0];
+                                    $rating = (float) $ratingData['avg_rating'];
+                                    $fullStars = (int) floor($rating);
+                                    $hasHalfStar = ($rating - $fullStars) >= 0.5;
+                                    $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                    ?>
                                     <div class="product-card__rating mb-2">
                                         <div class="product-card__stars">
-                                            <?php 
-                                            $rating = rand(35, 50) / 10; 
-                                            $fullStars = floor($rating);
-                                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                            for ($i = 0; $i < $fullStars; $i++): ?>
+                                            <?php for ($i = 0; $i < $fullStars; $i++): ?>
                                                 <i class="fas fa-star"></i>
                                             <?php endfor; ?>
                                             <?php if ($hasHalfStar): ?>
                                                 <i class="fas fa-star-half-alt"></i>
                                             <?php endif; ?>
-                                            <?php 
-                                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
-                                            for ($i = 0; $i < $emptyStars; $i++): ?>
+                                            <?php for ($i = 0; $i < $emptyStars; $i++): ?>
                                                 <i class="far fa-star"></i>
                                             <?php endfor; ?>
                                         </div>
-                                        <span class="product-card__rating-text">(<?php echo number_format($rating, 1); ?>)</span>
+                                        <span class="product-card__rating-text">
+                                            (<?php echo number_format($rating, 1); ?><?php echo $ratingData['total_reviews'] ? ' / ' . (int) $ratingData['total_reviews'] . ' đánh giá' : ''; ?>)
+                                        </span>
                                     </div>
                                     <p class="price mb-2"><?php echo format_price($product['price']); ?></p>
                                     <div class="product-card__actions">

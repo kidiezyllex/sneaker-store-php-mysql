@@ -6,6 +6,7 @@ class HomeController extends Controller
     {
         $productModel = new ProductModel($this->db);
         $wishlistModel = new WishlistModel($this->db);
+        $reviewModel = new ReviewModel($this->db);
 
         $driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
         $revenueIntervalExpression = $driver === 'pgsql'
@@ -79,17 +80,26 @@ class HomeController extends Controller
             ]
         ];
 
+        $featured = $productModel->getFeatured();
+        $bestSellers = $productModel->getBestSellers();
+        $ratingIds = array_unique(array_merge(
+            array_column($featured, 'id'),
+            array_column($bestSellers, 'id')
+        ));
+        $productRatings = $reviewModel->getSummariesByProductIds($ratingIds);
+
         return [
             'page_title' => 'Trang chủ - Cửa hàng giày thể thao',
             'metrics' => $metrics,
-            'featured_products' => $productModel->getFeatured(),
-            'best_sellers' => $productModel->getBestSellers(),
+            'featured_products' => $featured,
+            'best_sellers' => $bestSellers,
             'top_categories' => $productModel->getTopCategories(),
             'top_brands' => $productModel->getTopBrands(),
             'categoryIcons' => $categoryIcons,
             'testimonials' => $testimonials,
             'blog_posts' => $blogPosts,
             'wishlist_product_ids' => $userId ? $wishlistModel->getProductIdsByUser($userId) : [],
+            'product_ratings' => $productRatings,
         ];
     }
 }

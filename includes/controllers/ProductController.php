@@ -6,6 +6,7 @@ class ProductController extends Controller
     {
         $productModel = new ProductModel($this->db);
         $wishlistModel = new WishlistModel($this->db);
+        $reviewModel = new ReviewModel($this->db);
 
         $page = max(1, (int)($filters['page'] ?? 1));
         $perPage = 9;
@@ -15,6 +16,8 @@ class ProductController extends Controller
 
         $categories = $this->db->query("SELECT * FROM categories ORDER BY name")->fetchAll();
         $brands = $this->db->query("SELECT * FROM brands ORDER BY name")->fetchAll();
+        $productIds = array_column($result['items'], 'id');
+        $productRatings = $reviewModel->getSummariesByProductIds($productIds);
 
         return [
             'products' => $result['items'],
@@ -25,6 +28,7 @@ class ProductController extends Controller
             'categories' => $categories,
             'brands' => $brands,
             'wishlist_product_ids' => $userId ? $wishlistModel->getProductIdsByUser($userId) : [],
+            'product_ratings' => $productRatings,
         ];
     }
 
