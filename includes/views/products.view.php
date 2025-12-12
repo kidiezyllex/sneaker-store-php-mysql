@@ -1,5 +1,3 @@
-<?php include __DIR__ . '/../header.php'; ?>
-
 <div class="container">
     <div class="row mt-4">
         <div class="col-md-3">
@@ -122,6 +120,3 @@
         </div>
     </div>
 </div>
-
-<?php include __DIR__ . '/../footer.php'; ?>
-

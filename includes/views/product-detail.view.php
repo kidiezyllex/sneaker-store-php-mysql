@@ -1,5 +1,3 @@
-<?php include __DIR__ . '/../header.php'; ?>
-
 <div class="container">
     <?php if ($message): ?>
         <div class="alert alert-success alert-dismissible fade show">
@@ -80,7 +78,7 @@
                         <button type="submit" name="add_to_cart" class="btn btn-primary btn-lg" style="font-size: 16px;">
                             <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
                         </button>
-                        <a href="#" class="btn btn-outline-danger product-card__favorite <?php echo $isFavorite ? 'active' : ''; ?>" data-product-id="<?php echo $product_id; ?>" onclick="toggleFavorite(this, event); return false;">
+                        <a href="#" class="btn btn-outline-danger <?php echo $isFavorite ? 'active' : ''; ?>" data-product-id="<?php echo $product_id; ?>" onclick="toggleFavorite(this, event); return false;">
                             <i class="<?php echo $isFavorite ? 'fas fa-heart' : 'far fa-heart'; ?>"></i> Yêu thích
                         </a>
                     </div>
@@ -146,6 +144,3 @@
         </div>
     </div>
 </div>
-
-<?php include __DIR__ . '/../footer.php'; ?>
-

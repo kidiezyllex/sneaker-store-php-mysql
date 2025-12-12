@@ -80,4 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page_title = $product['name'];
+include 'includes/header.php';
 include __DIR__ . '/includes/views/product-detail.view.php';
+include 'includes/footer.php';

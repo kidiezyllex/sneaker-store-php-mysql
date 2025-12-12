@@ -39,19 +39,19 @@ class HomeController extends Controller
                 'name' => 'Nguyễn Minh Anh',
                 'role' => 'Marathon Runner',
                 'avatar' => 'https://images.pexels.com/photos/3760259/pexels-photo-3760259.jpeg?auto=compress&cs=tinysrgb&w=80',
-                'quote' => '“LnAnhStore luôn cập nhật những đôi giày chạy bộ mới nhất, dịch vụ tư vấn chuyên nghiệp giúp tôi chọn được đôi phù hợp nhất cho mỗi giải đấu.”'
+                'quote' => '“SneakerShop luôn cập nhật những đôi giày chạy bộ mới nhất, dịch vụ tư vấn chuyên nghiệp giúp tôi chọn được đôi phù hợp nhất cho mỗi giải đấu.”'
             ],
             [
                 'name' => 'Trần Thu Hà',
                 'role' => 'Fashion Blogger',
                 'avatar' => 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=80',
-                'quote' => '“Tôi yêu những bộ sưu tập hạn chế tại LnAnhStore. Từng chi tiết đóng gói đến bảo hành đều khiến tôi cảm thấy mình là khách hàng VIP.”'
+                'quote' => '“Tôi yêu những bộ sưu tập hạn chế tại SneakerShop. Từng chi tiết đóng gói đến bảo hành đều khiến tôi cảm thấy mình là khách hàng VIP.”'
             ],
             [
                 'name' => 'Lê Hoàng Long',
                 'role' => 'Basketball Coach',
                 'avatar' => 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=80',
-                'quote' => '“Thiết bị tập luyện cần sự tin cậy. LnAnhStore cung cấp những dòng giày bóng rổ chất lượng với giá hợp lý và giao hàng cực nhanh.”'
+                'quote' => '“Thiết bị tập luyện cần sự tin cậy. SneakerShop cung cấp những dòng giày bóng rổ chất lượng với giá hợp lý và giao hàng cực nhanh.”'
             ]
         ];
 

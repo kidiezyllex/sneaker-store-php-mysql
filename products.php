@@ -25,3 +25,4 @@ $page = $data['page'];
 
 include 'includes/header.php';
 include __DIR__ . '/includes/views/products.view.php';
+include 'includes/footer.php';

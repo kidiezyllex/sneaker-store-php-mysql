@@ -1,5 +1,3 @@
-<?php include __DIR__ . '/../header.php'; ?>
-
 <main class="home-main">
     <section class="hero-section">
         <div class="container-fluid px-0">
@@ -16,7 +14,7 @@
                         <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/1070360/pexels-photo-1070360.jpeg');">
                             <div class="hero-overlay"></div>
                             <div class="hero-content text-center">
-                                <span class="hero-eyebrow">LnAnhStore Collection</span>
+                                <span class="hero-eyebrow">SneakerShop Collection</span>
                                 <h1 class="hero-title">Bộ Sưu Tập Mới 2025</h1>
                                 <p class="hero-subtitle">Khám phá những mẫu giày thể thao mới nhất từ các thương hiệu hàng đầu.</p>
                                 <div class="hero-actions">
@@ -95,7 +93,7 @@
         <section class="home-section home-section--metrics pt-0">
             <div class="section-heading text-center">
                 <h2 class="section-title">Tổng quan hiệu suất</h2>
-                <p class="section-subtitle">Các chỉ số 30 ngày cho thấy mức độ tăng trưởng và sức hút hiện tại của LnAnhStore.</p>
+                <p class="section-subtitle">Các chỉ số 30 ngày cho thấy mức độ tăng trưởng và sức hút hiện tại của SneakerShop.</p>
             </div>
             <div class="row row-cols-2 row-cols-md-4 g-3 g-lg-4">
                 <div class="col">
@@ -143,7 +141,7 @@
             <div class="section-heading text-center">
                 <span class="section-eyebrow">Bộ sưu tập trong tuần</span>
                 <h2 class="section-title">Sản phẩm nổi bật</h2>
-                <p class="section-subtitle">Gợi ý những thiết kế đang được cộng đồng LnAnhStore săn đón nhiều nhất.</p>
+                <p class="section-subtitle">Gợi ý những thiết kế đang được cộng đồng SneakerShop săn đón nhiều nhất.</p>
             </div>
             <div class="row g-4">
                 <?php foreach ($featured_products as $product): ?>
@@ -328,9 +326,9 @@
 
         <section class="home-section">
             <div class="section-heading text-center">
-                <span class="section-eyebrow">Cộng đồng LnAnhStore</span>
+                <span class="section-eyebrow">Cộng đồng SneakerShop</span>
                 <h2 class="section-title">Trải nghiệm khách hàng</h2>
-                <p class="section-subtitle">Nghe chia sẻ từ những thành viên đã đồng hành cùng LnAnhStore trên mọi cung đường.</p>
+                <p class="section-subtitle">Nghe chia sẻ từ những thành viên đã đồng hành cùng SneakerShop trên mọi cung đường.</p>
             </div>
             <div class="row g-4">
                 <?php foreach ($testimonials as $testimonial): ?>
@@ -412,7 +410,7 @@
         <section class="home-section">
             <div class="section-heading text-center">
                 <span class="section-eyebrow">Cam kết dịch vụ</span>
-                <h2 class="section-title">Lý do chọn LnAnhStore</h2>
+                <h2 class="section-title">Lý do chọn SneakerShop</h2>
             </div>
             <div class="row g-4">
                 <div class="col-12 col-md-4">
@@ -440,6 +438,3 @@
         </section>
     </div>
 </main>
-
-<?php include __DIR__ . '/../footer.php'; ?>
-
