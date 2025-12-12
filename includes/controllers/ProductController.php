@@ -16,7 +16,7 @@ class ProductController extends Controller
 
         $categories = $this->db->query("SELECT * FROM categories ORDER BY name")->fetchAll();
         $brands = $this->db->query("SELECT * FROM brands ORDER BY name")->fetchAll();
-        $productIds = array_column($result['items'], 'id');
+        $productIds = array_values(array_column($result['items'], 'id'));
         $productRatings = $reviewModel->getSummariesByProductIds($productIds);
 
         return [

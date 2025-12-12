@@ -82,10 +82,10 @@ class HomeController extends Controller
 
         $featured = $productModel->getFeatured();
         $bestSellers = $productModel->getBestSellers();
-        $ratingIds = array_unique(array_merge(
+        $ratingIds = array_values(array_unique(array_merge(
             array_column($featured, 'id'),
             array_column($bestSellers, 'id')
-        ));
+        )));
         $productRatings = $reviewModel->getSummariesByProductIds($ratingIds);
 
         return [

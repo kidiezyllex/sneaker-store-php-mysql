@@ -32,6 +32,7 @@ class ReviewModel extends Model
 
     public function getSummariesByProductIds(array $productIds): array
     {
+        $productIds = array_values(array_map('intval', $productIds));
         if (empty($productIds)) {
             return [];
         }
