@@ -73,7 +73,7 @@
                             <h5>Tổng cộng:</h5>
                             <h5 class="text-danger"><?php echo format_price($total); ?></h5>
                         </div>
-                        <a href="/checkout.php" class="btn btn-success w-100 btn-lg">
+                        <a href="checkout.php" class="btn btn-success w-100 btn-lg">
                             <i class="fas fa-check"></i> Thanh toán
                         </a>
                         <a href="/products.php" class="btn btn-outline-secondary w-100 mt-2">
