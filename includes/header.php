@@ -9,9 +9,11 @@
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav style="background-color: #010101 !important;" class="navbar navbar-expand-lg navbar-dark py-0">
         <div class="container">
-            <a class="navbar-brand" href="/index.php"><i class="fas fa-shoe-prints"></i> SneakerShop</a>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/index.php">
+                <img src="/assets/images/logo.png" alt="SneakerShop" height="60">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
